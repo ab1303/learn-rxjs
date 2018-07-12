@@ -40,9 +40,9 @@ module.exports = {
   },
   plugins:[
     // new ExtractTextPlugin({filename: './src/.scss/main.scss'}),
-    // new ExtractTextPlugin(
-    //   {filename: './style/main.[chunkhash].css', disable: false, allChunks: true}
-    // ),
+    new ExtractTextPlugin(
+      {filename: './style/main.[chunkhash].css', disable: false, allChunks: true}
+    ),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
