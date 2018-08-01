@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     // main: './src/main.ts',
-    advancedAsynchronousJS: './src/Advanced Asynchronous Javascript/Minimal Observable Implementation/Multiple_Subscribes_to_one_observable.ts',
+    advancedAsynchronousJS: './src/Advanced Asynchronous Javascript/Minimal Observable Implementation/index.ts',
 
   },
   output: {
@@ -40,9 +40,9 @@ module.exports = {
   },
   plugins:[
     // new ExtractTextPlugin({filename: './src/.scss/main.scss'}),
-    // new ExtractTextPlugin(
-    //   {filename: './style/main.[chunkhash].css', disable: false, allChunks: true}
-    // ),
+    new ExtractTextPlugin(
+      {filename: './style/main.[chunkhash].css', disable: false, allChunks: true}
+    ),
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,

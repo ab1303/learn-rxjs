@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --watch --inline --mode development",
+    "start": "webpack-dev-server --watch --inline --mode=development",
     "postinstall": "typings install"
   },
   "author": "",
