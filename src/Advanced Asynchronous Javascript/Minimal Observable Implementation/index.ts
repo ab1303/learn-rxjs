@@ -106,6 +106,7 @@ const button = document.getElementById("button");
 
 const clicks = Observable.fromEvent(button, "click")
   .map(e => e.offsetX)
+  .filter(offsetX => offsetX> 10)
   .subscribe({
     next(ev) {
       console.log(ev);
