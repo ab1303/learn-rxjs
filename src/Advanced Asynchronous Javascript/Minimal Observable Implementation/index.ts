@@ -70,6 +70,36 @@ class Observable {
       };
     });
   }
+
+  filter(predicate) {
+    const self = this;
+    return new Observable(function subscribe(observer) {
+      console.log("Subscribe filter !!");
+      const subscription = self.subscribe({
+        next(data) {
+          let value;
+          try {
+              if(predicate(data))
+                observer.next(data);
+          } catch (e) {
+            observer.error(e);
+            subscription.unsubscribe();
+          }
+        },
+        error(err) {
+          observer.error(err);
+        }
+      });
+
+      return subscription;
+      return {
+        unsubscribe() {
+          console.log("UnSubscribe map !!");
+          subscription.unsubscribe();
+        }
+      };
+    });
+  }
 }
 
 const button = document.getElementById("button");
