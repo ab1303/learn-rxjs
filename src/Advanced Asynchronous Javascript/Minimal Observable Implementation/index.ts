@@ -62,12 +62,6 @@ class Observable {
       });
 
       return subscription;
-      return {
-        unsubscribe() {
-          console.log("UnSubscribe map !!");
-          subscription.unsubscribe();
-        }
-      };
     });
   }
 
@@ -79,8 +73,7 @@ class Observable {
         next(data) {
           let value;
           try {
-              if(predicate(data))
-                observer.next(data);
+            if (predicate(data)) observer.next(data);
           } catch (e) {
             observer.error(e);
             subscription.unsubscribe();
@@ -92,10 +85,40 @@ class Observable {
       });
 
       return subscription;
-      return {
-        unsubscribe() {
-          console.log("UnSubscribe map !!");
-          subscription.unsubscribe();
+    });
+  }
+
+  concat(...observables) {
+    return new Observable(function subscribe(observer) {
+      const myObservables = observables.slice();
+      let currentSubscription = null;
+      let processObservable = () => {
+        if (myObservables.length == 0) {
+          observer.complete();
+        } else {
+          let observable = myObservables.shift();
+          currentSubscription = observable.subscribe({
+            next: v => {
+              observer.next(v);
+            },
+            error: e => {
+              observer.error(e);
+              currentSubscription.unsubscribe();
+            },
+            complete: () => {
+              processObservable();
+            }
+          });
+
+          processObservable();
+
+          // return currentSubscription;  // rather than this
+          // By wrapping it an object literal; we've delayed it 
+          return {
+            unsubscribe() {
+              return currentSubscription; 
+            }
+          }
         }
       };
     });
@@ -106,7 +129,7 @@ const button = document.getElementById("button");
 
 const clicks = Observable.fromEvent(button, "click")
   .map(e => e.offsetX)
-  .filter(offsetX => offsetX> 10)
+  .filter(offsetX => offsetX > 10)
   .subscribe({
     next(ev) {
       console.log(ev);
@@ -116,4 +139,4 @@ const clicks = Observable.fromEvent(button, "click")
     }
   });
 
-  //clicks.unsubscribe();
+//clicks.unsubscribe();
