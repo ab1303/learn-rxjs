@@ -41,6 +41,39 @@ class Observable {
     });
   }
 
+  retry(num) {
+    const self = this;
+    return new Observable(function subscribe(observer) {
+      let currentSubscription = null;
+      const processRequest = currentAttemptNumber => {
+        currentSubscription = self.subscribe({
+          next(v) {
+            observer.next(v);
+          },
+          complete() {
+            observer.complete();
+          },
+          error(err) {
+            if (currentAttemptNumber === 0) {
+              observer.error(err);
+            } else {
+              processRequest(currentAttemptNumber - 1);
+            }
+          }
+        });
+      };
+
+      processRequest(num);
+
+      return {
+        unsubscribe(){
+          currentSubscription.unsubscribe();
+        }
+      }
+
+    });
+  }
+
   map(projection) {
     const self = this;
     return new Observable(function subscribe(observer) {
@@ -97,6 +130,7 @@ class Observable {
           observer.complete();
         } else {
           let observable = myObservables.shift();
+
           currentSubscription = observable.subscribe({
             next: v => {
               observer.next(v);
@@ -109,16 +143,16 @@ class Observable {
               processObservable();
             }
           });
+        }
+      };
 
-          processObservable();
+      processObservable();
 
-          // return currentSubscription;  // rather than this
-          // By wrapping it an object literal; we've delayed it 
-          return {
-            unsubscribe() {
-              return currentSubscription; 
-            }
-          }
+      // return currentSubscription;  // rather than this
+      // By wrapping it an object literal; we've delayed it
+      return {
+        unsubscribe() {
+          currentSubscription.unsubscribe();
         }
       };
     });
