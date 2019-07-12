@@ -12,7 +12,7 @@ import {TodoListComponent, CommandNames, Status, Item} from './todo-list.compone
 
 const btnInsertElem = document.getElementById('btn-insert');
 const listElem = document.getElementById('todo-list');
-const titleInputElem = document.getElementById('titel');
+const titleInputElem = document.getElementById('title');
 
 const gliphyApi = new GliphyApi('WdEZdJfMkSLstt4it0mULiRb4fSr3JoO');
 
@@ -26,7 +26,7 @@ const todoList = new TodoListComponent(listElem);
 // === INTERACTION OBSERVABLES ==========================================
 const btnInsertClick$ = merge(
   fromEvent(btnInsertElem, 'click'),
-  fromEvent(titleInputElem, 'keydown').pipe(filter(e => e.keyCode === 13))
+  fromEvent(titleInputElem, 'keydown').pipe(filter(e => (e as KeyboardEvent).keyCode === 13))
 );
 
 // == INTERMEDIATE OBSERVABLES ==========================================
@@ -37,7 +37,7 @@ const doneList$ = todoList.list$.pipe(map(l => l.filter(i => i.status === Status
 // Observable of items to create
 const itemToCreate$ = btnInsertClick$
   .pipe(
-    map(_ => titleInputElem.value),
+    map(_ => (titleInputElem as HTMLInputElement).value),
     // Filter out empty titles
     filter(v => !!v),
     map(title => todoList.getNewItem({title}))
@@ -78,9 +78,10 @@ const checkboxChange$ = todoList.list$
           // Get clicks from checkbox
           mergeMap(cbx => fromEvent(cbx, 'input')),
           // If checked value chenges
-          distinctUntilChanged((x,y) => x.target.checked === y.target.checked),
+          distinctUntilChanged((x, y) => ((x as KeyboardEvent).target as HTMLInputElement).checked === ((y as KeyboardEvent).target as HTMLInputElement).checked),
+          // distinctUntilChanged((x, y) => x.target.checked === y.target.checked),
           // Map to itme obj with new state
-          map(e => ({id: todoList.getItemFromCheckbox(e).id, status: (e.target.checked ? Status.done : Status.idle)})
+          map(e => ({id: todoList.getItemFromCheckbox(e).id, status: (((e as KeyboardEvent).target as HTMLInputElement).checked ? Status.done : Status.idle)})
           )
         )),
       )
@@ -103,11 +104,12 @@ const titleEdit$ = todoList.list$
       )
     ),
     // If the title has changed 
-    distinctUntilChanged((x,y) => x.target.innerHTML === y.target.innerHTML),
+    // distinctUntilChanged((x,y) => x.target.innerHTML === y.target.innerHTML),
+    distinctUntilChanged((x,y) => ((x as KeyboardEvent).target as HTMLInputElement).innerHTML === ((y as KeyboardEvent).target as HTMLInputElement).innerHTML),
     // Create item obj with new title
     map(ce => ({
         id : todoList.getItemFromTitle(ce).getAttribute('id'),
-        title: ce.target.innerHTML
+        title: ((ce as KeyboardEvent).target as HTMLInputElement).innerHTML
       })
     )
   );

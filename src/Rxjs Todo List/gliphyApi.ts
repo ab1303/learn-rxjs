@@ -16,7 +16,7 @@ export class GliphyApi {
     return from(axios.get(this.getUrl()));
   };
 
-  search(queryParams: { q: 'string', [key: string]: any }) {
+  search(queryParams: { q: string, [key: string]: any }) {
     queryParams = {
       limit: 25,
       offset: 0,

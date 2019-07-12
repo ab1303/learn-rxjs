@@ -23,21 +23,22 @@ export function dec2hex (dec): string {
     return ('0' + dec.toString(16)).substr(-2)
 }
 
-export function fakeHttpCall<T>(value: T, delay): Observable<T> {
-  return Observable.create((o) => {
-    // make it generic
-    value = {...value};
-    if(delay) {
-      setTimeout(() => Promise.resolve().then(_ => {o.next(value); o.complete();}), delay);
-    }
+// Comment for now
+// export function fakeHttpCall<T>(value: T, delay): Observable<T> {
+//   return Observable.create((o) => {
+//     // make it generic
+//     value = {...value};
+//     if(delay) {
+//       setTimeout(() => Promise.resolve().then(_ => {o.next(value); o.complete();}), delay);
+//     }
 
-    else {
-      Promise.resolve().then(_ => {o.next(value);  o.complete();})
-    }
+//     else {
+//       Promise.resolve().then(_ => {o.next(value);  o.complete();})
+//     }
 
-    return () => {};
-  })
-}
+//     return () => {};
+//   })
+// }
 
 export function enderHtmlElem(tag, attrs = {}): string {
   return `
