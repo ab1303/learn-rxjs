@@ -1,7 +1,7 @@
 // Setup Test
 //alert("hello");
 
-import "./.scss/main.scss";
+import "../.scss/main.scss";
 
 // Example 2
 
