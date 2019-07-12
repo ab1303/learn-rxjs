@@ -6,14 +6,17 @@
   "scripts": {
     "dev": "webpack --mode development",
     "build": "webpack --mode production",
-    "start": "webpack-dev-server --watch --inline --mode development",
+    "start": "webpack-dev-server --watch --inline --mode=development",
     "postinstall": "typings install"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "rxjs": "^6.2.0",
-    "rxjs-compat": "^6.2.1"
+    "rxjs": "^6.3.3",
+    "rxjs-compat": "^6.3.3",
+    "axios": "^0.18.0",
+    "milligram": "^1.3.0",    
+    "typy": "^3.0.0"
   },
   "devDependencies": {
     "babel-core": "^6.26.3",
