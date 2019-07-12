@@ -1,4 +1,4 @@
-import './style.scss';
+import '../.scss/main.scss';
 
 
 import { of, from, race as raceFrom, EMPTY, timer,fromEvent, Observer, Observable,pipe,merge} from 'rxjs'

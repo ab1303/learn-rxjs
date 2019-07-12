@@ -5,7 +5,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 module.exports = {
   entry: {
     // main: './src/main.ts',
-    advancedAsynchronousJS: './src/Advanced Asynchronous Javascript/Minimal Observable Implementation/index.ts',
+    advancedAsynchronousJS: './src/Rxjs Todo List/index.ts',
 
   },
   output: {
@@ -46,7 +46,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
-      template: './src/Advanced Asynchronous Javascript/index.html',
+      template: './src/Rxjs Todo List/index.html',
       filename: 'index.html'
     })
   ],
