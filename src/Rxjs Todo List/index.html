@@ -1,0 +1,27 @@
+<html>
+
+<head>
+  <title>RxJs</title>
+
+  <link rel="stylesheet" href="<%=htmlWebpackPlugin.files.chunks.main.css %>">
+</head>
+
+<body>
+
+  <div class="header">
+    <h1>RxJS - Todo-List And Images</h1>
+  </div>
+
+  <div class="content">
+    <div class="create-form">
+      <input type="text" placeholder="titel" id="titel" value="smoosh">
+      <button id="btn-insert">Add</button>
+    </div>
+
+    <div id="todo-list">
+    </div>
+  </div>
+  <script src="<%= htmlWebpackPlugin.files.chunks.advancedAsynchronousJS.entry %>"> </script>
+</body>
+
+</html>
