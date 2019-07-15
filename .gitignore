@@ -2,3 +2,6 @@ node_modules/
 
 # UserSurvey gitignore
 .idea
+dist/style/main.0a1141838ac02304b23d.css
+dist/main.0a1141838ac02304b23d.js
+dist/index.html

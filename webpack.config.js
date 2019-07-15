@@ -4,7 +4,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    main: './src/learn rxJs/main.ts',
+    main: './src/Rxjs Todo List/index.ts',
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
@@ -44,7 +44,7 @@ module.exports = {
     new HtmlWebpackPlugin({
       inject: false,
       hash: true,
-      template: './src/learn rxJs/index.html',
+      template: './src/Rxjs Todo List/index.html',
       filename: 'index.html'
     })
   ],
